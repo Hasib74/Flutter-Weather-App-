@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/forecast/backgraound/Rain.dart';
 import 'package:weather_app/forecast/backgraound/app_bar.dart';
 import 'package:weather_app/forecast/backgraound/week_draw.dart';
 import 'package:weather_app/Genaric_widget/sliding_drawer.dart';
@@ -43,36 +44,38 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return Scaffold(
         body: Stack(
       children: <Widget>[
+
+
         new Forecast(
           radialList: forecastRadialList,
           slidingListController: slidingListController,
         ),
+        new Rain(),
 
         new app_bar(
           onDrawerArrowTap: openableController.open,
           selectedDay: selectedDay,
         ),
 
-        new sliding_drawer(drawer: new week_draw(
-          onDaySelected: (String title) {
-            setState(() {
-              selectedDay=title.replaceAll('\n', ', ');
-            });
-            openableController.close();
-            slidingListController
-                .close()
-                .then((_)=> slidingListController
-                .open());
-          }
 
-        ),
-
+        new sliding_drawer(
           openableController: openableController,
+          drawer: new WeekDrawer(
+            onDaySelected: (String title) {
+              setState(() {
+                selectedDay = title.replaceAll('\n', ', ');
+              });
 
+              slidingListController
+                  .close()
+                  .then((_) => slidingListController.open());
 
+              openableController.close();
+            },
+          ),
         ),
 
-
+       // new Rain(),
       ],
     ));
   }
