@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/forecast/backgraound/app_bar.dart';
-
 import 'package:weather_app/forecast/backgraound/week_draw.dart';
 import 'package:weather_app/Genaric_widget/sliding_drawer.dart';
 import 'package:weather_app/forecast/forcast_list.dart';
