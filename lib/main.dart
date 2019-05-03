@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/forecast/backgraound/app_bar.dart';
-import 'package:weather_app/forecast/backgraound/backgraound_with_rigns.dart';
+
 import 'package:weather_app/forecast/backgraound/week_draw.dart';
 import 'package:weather_app/Genaric_widget/sliding_drawer.dart';
+import 'package:weather_app/forecast/forcast_list.dart';
 import 'package:weather_app/forecast/forecast.dart';
+import 'package:weather_app/forecast/radio_list.dart';
 
 void main() => runApp(MaterialApp(
       home: MyHomePage(),
@@ -15,19 +17,26 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   OpenableController openableController;
-  String selectedDay='Monday,August 26';
+  SlidingRadialListController slidingListController;
+  String selectedDay = 'Monday, August 26';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     openableController = new OpenableController(
-        vsync: this, openDuration: const Duration(milliseconds: 250))
+      vsync: this,
+      openDuration: const Duration(milliseconds: 250),
+    )
       ..addListener(() => setState(() {}));
-    //..open();
+
+    slidingListController = new SlidingRadialListController(
+      itemCount: forecastRadialList.items.length,
+      vsync: this,
+    )
+      ..open();
   }
 
   @override
@@ -35,8 +44,10 @@ class _MyHomePageState extends State<MyHomePage>
     return Scaffold(
         body: Stack(
       children: <Widget>[
-       new Forecast(),
-
+        new Forecast(
+          radialList: forecastRadialList,
+          slidingListController: slidingListController,
+        ),
 
         new app_bar(
           onDrawerArrowTap: openableController.open,
@@ -49,9 +60,18 @@ class _MyHomePageState extends State<MyHomePage>
               selectedDay=title.replaceAll('\n', ', ');
             });
             openableController.close();
+            slidingListController
+                .close()
+                .then((_)=> slidingListController
+                .open());
           }
 
-        ),openableController: openableController,),
+        ),
+
+          openableController: openableController,
+
+
+        ),
 
 
       ],

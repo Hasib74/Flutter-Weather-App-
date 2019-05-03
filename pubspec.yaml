@@ -28,6 +28,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  spritewidget: ^0.9.18
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -43,6 +45,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - img/wether_wallpaper.jpeg
+    - img/storm.png
+    - img/summer.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
